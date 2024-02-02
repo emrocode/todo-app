@@ -1,0 +1,11 @@
+.header {
+  @apply border-b;
+}
+
+.nav {
+  @apply flex h-16 items-center justify-between;
+}
+
+.brand {
+  @apply text-base font-bold uppercase before:content-["\005B"] after:content-["\005D"];
+}

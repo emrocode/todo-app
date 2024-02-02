@@ -1,0 +1,7 @@
+.textbox {
+  @apply w-full rounded-t border p-4 outline-none;
+}
+
+.todoList {
+  @apply my-6;
+}

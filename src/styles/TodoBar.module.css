@@ -1,0 +1,23 @@
+.bar {
+  @apply flex w-full flex-wrap items-center justify-between gap-2 rounded-b border-x border-b bg-neutral-50 px-4 py-2;
+}
+
+.menu {
+  @apply flex gap-x-2;
+}
+
+.button {
+  @apply flex items-center gap-x-1 rounded border bg-white px-3 py-2;
+}
+
+.text {
+  @apply text-xs capitalize leading-none;
+}
+
+.shortcut {
+  @apply flex items-center gap-x-2 text-sm;
+}
+
+.shortcut > code {
+  @apply rounded-full border bg-white px-3 py-px;
+}
