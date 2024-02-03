@@ -7,7 +7,7 @@ import { Home } from "./pages";
 
 const router = createBrowserRouter([
   {
-    path: "/",
+    path: "/todo-app/",
     element: <Layout />,
     children: [
       {
