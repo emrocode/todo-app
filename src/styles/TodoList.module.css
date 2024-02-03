@@ -1,7 +1,11 @@
 .label {
-  @apply relative block select-none border-b pb-4 pr-4;
+  @apply flex w-full select-none flex-row-reverse gap-x-2 border-b pb-4;
+}
+
+.label > span {
+  @apply block w-full break-all;
 }
 
 .todo {
-  @apply absolute right-0 mr-2 h-4 w-4 translate-x-full translate-y-[.25rem] scale-0 duration-150 ease-in checked:scale-100 checked:accent-indigo-800 indeterminate:bg-white hover:scale-100;
+  @apply h-4 w-4 translate-y-[.25rem] scale-0 duration-150 ease-in checked:scale-100 checked:accent-indigo-800 indeterminate:bg-white hover:scale-100;
 }
