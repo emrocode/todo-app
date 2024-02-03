@@ -1,10 +1,9 @@
-import { Todo, TodoList } from "../components";
+import { Todo } from "../components";
 
 export default function Home() {
   return (
     <section className="mt-6">
       <Todo />
-      <TodoList />
     </section>
   );
 }
