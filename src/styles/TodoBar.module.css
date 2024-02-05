@@ -1,5 +1,5 @@
 .bar {
-  @apply flex w-full flex-wrap items-center justify-between gap-2 rounded-b border-x border-b bg-neutral-50 px-4 py-2;
+  @apply flex w-full flex-wrap items-center justify-between gap-2 rounded-b border-x border-b bg-neutral-50 p-2;
 }
 
 .menu {
@@ -19,5 +19,5 @@
 }
 
 .shortcut > code {
-  @apply rounded-full border bg-white px-3 py-px;
+  @apply rounded-full border bg-white px-2.5 py-px;
 }

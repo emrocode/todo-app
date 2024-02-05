@@ -1,11 +1,19 @@
 .label {
-  @apply flex w-full select-none flex-row-reverse gap-x-2 border-b pb-4;
+  @apply mb-4 flex w-full select-none gap-x-2 border-b pb-4;
 }
 
 .label > span {
-  @apply block w-full break-all;
+  @apply block w-full break-all rounded;
 }
 
 .todo {
-  @apply h-4 w-4 translate-y-[.25rem] scale-0 duration-150 ease-in checked:scale-100 checked:accent-indigo-800 indeterminate:bg-white hover:scale-100;
+  @apply hidden appearance-none;
+}
+
+.checkButton {
+  @apply rounded-full border border-sky-900 bg-sky-300 p-1 text-sky-900;
+}
+
+.deleteButton {
+  @apply rounded-full border border-red-900 bg-red-300 p-1 text-red-900;
 }
