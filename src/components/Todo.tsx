@@ -9,14 +9,7 @@ import type { Todo } from "../types";
 const Todo = () => {
   const [todos, setTodos] = useState<Todo[]>([]);
   const [todo, setTodo] = useState<string>("");
-
-  // Load todos from localStorage
-  useEffect(() => {
-    const storedTodos = JSON.parse(
-      window.localStorage.getItem("savedTodos") || "[]",
-    );
-    setTodos(storedTodos);
-  }, []);
+  const storageKey = "savedTodos";
 
   const watchTodo = (e: React.ChangeEvent<HTMLInputElement>) => {
     setTodo(e.currentTarget.value);
@@ -48,23 +41,32 @@ const Todo = () => {
 
     // Add new todo
     if (todo.trim() !== "") {
-      window.localStorage.setItem("savedTodos", JSON.stringify(dataToSave));
+      window.localStorage.setItem(storageKey, JSON.stringify(dataToSave));
       setTodos([...todos, newTodo]);
       setTodo("");
       toast.success(`${MSGS[1]} ${newTodo.id}`);
     }
   };
 
-  const handleKeyPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
-    if ((event.altKey && event.key === "s") || event.key === "Enter") {
+  const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if ((e.altKey && e.key === "s") || e.key === "Enter") {
       handleSave();
     }
   };
+
+  // Load todos from localStorage
+  useEffect(() => {
+    const storedTodos = JSON.parse(
+      window.localStorage.getItem(storageKey) || "[]",
+    );
+    setTodos(storedTodos);
+  }, []);
 
   return (
     <section>
       <input
         value={todo}
+        name="todo"
         type="text"
         role="textbox"
         className={css.textbox}
