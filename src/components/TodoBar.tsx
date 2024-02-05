@@ -8,12 +8,12 @@ const TodoBar = ({ handleReset, handleSave }: TodoBar) => {
       <div className={css.bar}>
         <span className={css.shortcut}>
           <code>alt + s</code>
-          <span>to save todo</span>
+          <span>to add</span>
         </span>
         <div className={css.menu}>
           <button type="reset" onClick={handleReset} className={css.button}>
             <Eraser size={13} />
-            <span className={css.text}>reset</span>
+            <span className={css.text}>clear</span>
           </button>
           <button type="button" onClick={handleSave} className={css.button}>
             <Plus size={13} />
