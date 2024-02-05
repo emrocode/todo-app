@@ -1,60 +1,78 @@
 import css from "../styles/TodoList.module.css";
-import { ChangeEvent, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { MSGS } from "../data";
+import { Check, X } from "lucide-react";
 import type { Todo } from "../types";
 
 const Todo = ({ id, todo, completed }: Todo) => {
-  const handleCheckboxChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const isCompleted = e.target.checked;
+  const [isCompleted, setIsCompleted] = useState<boolean>(completed);
+  const [isRemoved, setIsRemoved] = useState<boolean>();
+  const storageKey = "savedTodos";
 
-    const updateTodoAndStorage = (todos: Todo[]) => {
-      const updatedTodos = todos.map((item: Todo) =>
-        item.id === id ? { ...item, completed: isCompleted } : item,
+  const handleButtonClick = () => {
+    setIsCompleted((prev) => {
+      const storedTodos = JSON.parse(
+        window.localStorage.getItem(storageKey) || "[]",
       );
 
-      window.localStorage.setItem("savedTodos", JSON.stringify(updatedTodos));
-    };
+      // Update localStorage
+      const updatedTodos = storedTodos.map((item: Todo) =>
+        item.id === id ? { ...item, completed: !prev } : item,
+      );
 
-    const storedTodos = JSON.parse(
-      window.localStorage.getItem("savedTodos") || "[]",
-    );
+      window.localStorage.setItem(storageKey, JSON.stringify(updatedTodos));
 
-    const span = e.target.nextSibling as HTMLElement | null;
-    if (span) {
-      span.style.textDecoration = isCompleted ? "line-through" : "none";
-      updateTodoAndStorage(storedTodos);
-    }
+      return !prev;
+    });
   };
 
-  const updateCheckbox = (id: string, completed: boolean) => {
-    const checkbox = document.getElementById(id) as HTMLInputElement | null;
-    const span = checkbox?.nextSibling as HTMLElement | null;
+  const deleteTodo = (id: string) => {
+    const storedTodos = JSON.parse(localStorage.getItem(storageKey) || "[]");
+    const updatedTodos = storedTodos.filter((todo: Todo) => todo.id !== id);
 
-    if (checkbox && span) {
-      checkbox.checked = completed;
-      span.style.textDecoration = completed ? "line-through" : "none";
-    }
+    window.localStorage.setItem(storageKey, JSON.stringify(updatedTodos));
+
+    setIsRemoved(true);
   };
 
   useEffect(() => {
-    updateCheckbox(id, completed);
-  }, [completed, id]);
+    setIsCompleted(completed);
+    setIsRemoved(isRemoved);
+  }, []);
+
+  // Hide removed todos
+  if (isRemoved) {
+    return null;
+  }
 
   return (
-    <section>
-      {id && (
-        <label title={MSGS[2]} className={css.label}>
-          <input
-            type="checkbox"
-            id={id}
-            className={css.todo}
-            tabIndex={-1}
-            onChange={handleCheckboxChange}
-          />
-          <span style={{ textDecoration: "none" }}>{todo}</span>
-        </label>
-      )}
-    </section>
+    <>
+      <div className={css.label}>
+        <span style={{ textDecoration: isCompleted ? "line-through" : "none" }}>
+          {todo}
+        </span>
+        {!isCompleted && (
+          <button
+            type="button"
+            aria-label={MSGS[2]}
+            title={MSGS[2]}
+            className={css.checkButton}
+            onClick={() => handleButtonClick()}
+          >
+            <Check size={13} />
+          </button>
+        )}
+        <button
+          type="button"
+          aria-label={MSGS[3]}
+          title={MSGS[3]}
+          className={css.deleteButton}
+          onClick={() => deleteTodo(id)}
+        >
+          <X size={13} />
+        </button>
+      </div>
+    </>
   );
 };
 
